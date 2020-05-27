@@ -6,7 +6,7 @@ async function register(user) {
 }
 
 function login(filter) {
-    return db('user').select('username', 'token').where(filter).first()
+    return db('user').select('uuid', 'username', 'token').where(filter).first()
 }
 
 function getUser(filter) {

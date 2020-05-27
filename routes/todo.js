@@ -13,4 +13,13 @@ router.get('/', (req, res, next) => {
     }
 })
 
+router.post('/add', async (req, res, next) => {
+    try {
+        res.status(200).json({ uhh: 'uhh' })
+    } catch(err) {
+        console.error(err)
+        next(new ServerException())
+    }
+})
+
 module.exports = router
