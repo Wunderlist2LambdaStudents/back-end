@@ -16,9 +16,10 @@ exports.up = function(knex) {
         table.integer('location', 16).notNullable()
     })
     .createTable('location', table => {
-        table.integer('location_id').notNullable().inTable('todo').references('location')
-        table.float('latitude', 14, 10).notNullable();
-        table.float('longitude', 14, 10).notNullable();
+        table.integer('location_id').unsigned().notNullable()
+        table.foreign('location_id').references('location').inTable('todo')
+        table.float('latitude', 14, 10).notNullable()
+        table.float('longitude', 14, 10).notNullable()
     })
 };
 
