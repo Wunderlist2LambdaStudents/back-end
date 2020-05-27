@@ -3,8 +3,8 @@ exports.up = function(knex) {
     .createTable('user', table => {
         table.uuid('uuid').primary()
         table.string('username', 32).notNullable().unique().index()
-        table.string('password', 128).notNullable()
-        table.string('token', 128).notNullable()
+        table.string('password').notNullable()
+        table.string('token').notNullable()
     })
     .createTable('todo', table => {
         table.uuid('user_uuid').primary()
