@@ -8,12 +8,12 @@ exports.up = function(knex) {
     })
     .createTable('todo', table => {
         table.uuid('user_uuid').primary()
-        table.string('title', 64).notNullable()
-        table.string('body', 256).notNullable()
+        table.string('title').notNullable()
+        table.string('body').notNullable()
         table.date('due_date').notNullable()
         table.boolean('completed').notNullable()
-        table.string('recurring', 16).notNullable()
-        table.integer('location', 16).notNullable().unique()
+        table.string('recurring').notNullable()
+        table.integer('location').notNullable().unique()
     })
     .createTable('location', table => {
         table.integer('location_id').unsigned().notNullable()
