@@ -13,7 +13,7 @@ exports.up = function(knex) {
         table.date('due_date').notNullable()
         table.boolean('completed').notNullable()
         table.string('recurring', 16).notNullable()
-        table.integer('location', 16).notNullable()
+        table.integer('location', 16).notNullable().unique()
     })
     .createTable('location', table => {
         table.integer('location_id').unsigned().notNullable()
