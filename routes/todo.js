@@ -42,7 +42,7 @@ router.post('/add', authorization, async (req, res, next) => {
 })
 
 router.get('/test', authorization, (req, res, next) => {
-    res.status(200).json({ test: 'this test works' })
+    res.status(200).json({ test: 'idk' })
 })
 
 module.exports = router

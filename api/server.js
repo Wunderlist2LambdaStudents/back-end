@@ -14,10 +14,6 @@ server.get('/', (req, res) => {
 server.use('/auth', authRouter)
 server.use('/todo', todoRouter)
 
-server.get('/', (req, res) => {
-    res.status(200).json({ api: 'working' })
-})
-
 server.listen(PORT, () => {
   console.log(`server listening on port:${PORT}`)
 })
