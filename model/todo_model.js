@@ -4,6 +4,10 @@ function getTodosByUuid(uuid) {
     return db('todo').select('*').where({ user_uuid: uuid })
 }
 
+function getTodoById(user_uuid, location) {
+    return db('todo').select('*').where({ user_uuid, location })
+}
+
 async function addTodo(todo) {
     const newTodo = await db('todo').insert({
         user_uuid: todo.user_uuid,
@@ -13,13 +17,18 @@ async function addTodo(todo) {
         completed: false,
         recurring: todo.recurring
     })
+    const locationInsert = await db('location').insert({ location_id: newTodo[0] || null, latitude: todo.location.x || null, longitude: todo.location.y || null})
     const getNewTodo = await getTodosByUuid(todo.user_uuid)
-    const lastTodo = getNewTodo.length <= 1 ? 1 : getNewTodo.length - 1
-    const locationInsert = await db('location').insert({ location_id: getNewTodo[lastTodo].location || null, latitude: todo.location.x || null, longitude: todo.location.y || null})
-    return getNewTodo[lastTodo]
+    return { todo, location_id: newTodo[0] }
 }
 
 module.exports = {
     getTodosByUuid,
+    getTodoById,
     addTodo
 }
+
+// {
+// 	"user_uuid": "83793d0d-19e2-5e0f-a9c7-f9b8b49e5731",
+// 	"location": 27
+// }
