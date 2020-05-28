@@ -27,14 +27,14 @@ async function editTodo(id, todo) {
     return db('todo').select('*').where({ location: id }).first()
 }
 
+function deleteTodo(id) {
+    return db('todo').where({ location: id }).del()
+}
+
 module.exports = {
     getTodosByUuid,
     getTodoById,
     addTodo,
-    editTodo
+    editTodo,
+    deleteTodo
 }
-
-// {
-// 	"user_uuid": "83793d0d-19e2-5e0f-a9c7-f9b8b49e5731",
-// 	"location": 27
-// }
