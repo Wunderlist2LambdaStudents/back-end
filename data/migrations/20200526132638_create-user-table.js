@@ -7,19 +7,19 @@ exports.up = function(knex) {
         table.string('token').notNullable()
     })
     .createTable('todo', table => {
-        table.uuid('user_uuid').primary()
+        table.uuid('user_uuid').notNullable()
         table.string('title').notNullable()
         table.string('body').notNullable()
         table.date('due_date').notNullable()
         table.boolean('completed').notNullable()
         table.string('recurring').notNullable()
-        table.integer('location').notNullable().unique()
+        table.increments('location').unique()
     })
     .createTable('location', table => {
-        table.integer('location_id').unsigned().notNullable()
+        table.integer('location_id').unsigned()
         table.foreign('location_id').references('location').inTable('todo')
-        table.float('latitude', 14, 10).notNullable()
-        table.float('longitude', 14, 10).notNullable()
+        table.float('latitude', 14, 10)
+        table.float('longitude', 14, 10)
     })
 };
 
