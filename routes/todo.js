@@ -5,9 +5,20 @@ const ServerException = require('../errors/ServerException')
 const InvalidCredentialsException = require('../errors/InvalidCredentialsException')
 const authorization = require('../middleware/authorization')
 
-router.get('/', (req, res, next) => {
+router.get('/', authorization, (req, res, next) => {
     try {
-        res.status(200).json({ todo: 'route works' })
+        res.status(200).json({ todo: 'route and authentication works' })
+    } catch(err) {
+        console.error(err)
+        next(new ServerException())
+    }
+})
+
+router.get('/:id', authorization, async (req, res, next) => {
+    try {
+        const uuid = req.params.id
+        const todos = await Todo.getTodosByUuid(uuid)
+        res.status(200).json(todos)
     } catch(err) {
         console.error(err)
         next(new ServerException())
@@ -30,15 +41,8 @@ router.post('/add', authorization, async (req, res, next) => {
     }
 })
 
-router.get('/:id', authorization, async (req, res, next) => {
-    try {
-        const uuid = req.params.id
-        const todos = await Todo.getTodosByUuid(uuid)
-        res.status(200).json(todos)
-    } catch(err) {
-        console.error(err)
-        next(new ServerException())
-    }
+router.get('/test', (req, res, next) => {
+    res.status(200).json({ test: 'this test workss' })
 })
 
 module.exports = router
