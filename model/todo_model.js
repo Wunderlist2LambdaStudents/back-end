@@ -1,7 +1,7 @@
 const db = require('../data/dbConnection')
 
 function getTodosByUuid(uuid) {
-    return db('todo').select('*').where({ user_uuid: uuid })
+    return db('todo').select('*').where(uuid)
 }
 
 async function addTodo(todo) {

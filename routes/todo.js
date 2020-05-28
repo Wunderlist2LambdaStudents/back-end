@@ -30,10 +30,10 @@ router.post('/add', authorization, async (req, res, next) => {
     }
 })
 
-router.get('/:uuid', authorization, async (req, res, next) => {
+router.get('/:id', authorization, async (req, res, next) => {
     try {
-        const uuid = req.params.uuid
-        const todos = await Todo.getTodosByUuid(uuid)
+        const uuid = req.params.id
+        const todos = await Todo.getTodosByUuid({ user_uuid: uuid })
         res.status(200).json(todos)
     } catch(err) {
         console.error(err)
