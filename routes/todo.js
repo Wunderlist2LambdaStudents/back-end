@@ -3,9 +3,8 @@ const router = require('express').Router()
 const Todo = require('../model/todo_model')
 const ServerException = require('../errors/ServerException')
 const InvalidCredentialsException = require('../errors/InvalidCredentialsException')
-const authorization = require('../middleware/authorization')
 
-router.get('/', authorization, (req, res, next) => {
+router.get('/', (req, res, next) => {
     try {
         res.status(200).json({ todo: 'route and authentication works' })
     } catch(err) {
@@ -14,7 +13,7 @@ router.get('/', authorization, (req, res, next) => {
     }
 })
 
-router.get('/:id', authorization, async (req, res, next) => {
+router.get('/fetch/:id', async (req, res, next) => {
     try {
         const uuid = req.params.id
         const todos = await Todo.getTodosByUuid(uuid)
@@ -25,7 +24,7 @@ router.get('/:id', authorization, async (req, res, next) => {
     }
 })
 
-router.post('/add', authorization, async (req, res, next) => {
+router.post('/add', async (req, res, next) => {
     try {
         const { uuid, title, body, due_date, recurring, location = { x: null, y: null } } = req.body
         if(uuid && title && body && due_date && recurring ) {
@@ -41,8 +40,17 @@ router.post('/add', authorization, async (req, res, next) => {
     }
 })
 
-router.get('/test', authorization, (req, res, next) => {
-    res.status(200).json({ test: 'idk' })
+router.post('/edit/:loc_id', async (req, res, next) => {
+    try {
+        const id = req.params.loc_id
+        const { body, title, due_date, recurring, completed } = req.body
+        const todo = { body, title, due_date, completed, recurring }
+        const editTodo = await Todo.editTodo(id, todo)
+        res.status(200).json(editTodo)
+    } catch(err) {
+        console.error(err)
+        next(new ServerException())
+    }
 })
 
 module.exports = router

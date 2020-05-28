@@ -22,10 +22,16 @@ async function addTodo(todo) {
     return { todo, location_id: newTodo[0] }
 }
 
+async function editTodo(id, todo) {
+    const editTodo = await db('todo').where({ location: id }).update(todo)
+    return db('todo').select('*').where({ location: id }).first()
+}
+
 module.exports = {
     getTodosByUuid,
     getTodoById,
-    addTodo
+    addTodo,
+    editTodo
 }
 
 // {
