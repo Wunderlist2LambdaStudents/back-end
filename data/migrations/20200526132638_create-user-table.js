@@ -7,7 +7,7 @@ exports.up = function(knex) {
         table.string('token').notNullable()
     })
     .createTable('todo', table => {
-        table.uuid('user_uuid').notNullable()
+        table.string('user_uuid').notNullable()
         table.string('title').notNullable()
         table.string('body').notNullable()
         table.date('due_date').notNullable()
