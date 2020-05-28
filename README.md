@@ -12,4 +12,4 @@ route | data | returns
 **GET** /todo/ | { } | { todo: 'route and authentication works' }
 **GET** /todo/fetch/:id | {  } | [{ (users todo's by uuid) }]
 **POST** /todo/add | { uuid, title, body, due_date, recurring, (optional) location = { x, y } } | { { todo added}, location_id }
-**POST** /todo/edit/:id | (all optional) { uuid, title, body, due_date, recurring, location } | { edited todo }
+**POST** /todo/edit/:id | (all optional) { title, body, due_date, completed, recurring } | { edited todo }
