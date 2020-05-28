@@ -53,4 +53,15 @@ router.post('/edit/:loc_id', async (req, res, next) => {
     }
 })
 
+router.delete('/remove/:loc_id', async (req, res, next) => {
+    try {
+        const id = req.params.loc_id
+        const deleteTodo = await Todo.deleteTodo(id)
+        res.status(200).json(deleteTodo)
+    } catch(err) {
+        console.error(err)
+        next(new ServerException())
+    }
+})
+
 module.exports = router
