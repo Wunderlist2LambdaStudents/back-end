@@ -18,6 +18,8 @@ server.use('/todo', authentication, todoRouter)
 
 server.use(errorHandler)
 
-server.listen(PORT, () => {
-  console.log(`server listening on port:${PORT}`)
-})
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(PORT, () => console.log(`Server Running on ${PORT}`));
+}
+
+module.exports = server
